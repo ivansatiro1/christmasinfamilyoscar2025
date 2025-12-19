@@ -1,0 +1,8 @@
+{
+  "name": "Cerimonia di Premiazione - La Notte delle Stelle",
+  "description": "An elegant, cinematic awards ceremony platform featuring live countdowns, nominee showcases, virtual presenters, and acceptance speeches powered by AI.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
