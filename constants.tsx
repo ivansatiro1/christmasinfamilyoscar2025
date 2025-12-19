@@ -39,28 +39,28 @@ export const NOMINEES: Nominee[] = [
   }
 ];
 
-// Correzione path Categoria 1: Mappatura delle immagini caricate nella cartella img/
+// Correzione path Categoria 1: Mappatura pulita con il path 'img/' relativo alla root
 export const CATEGORY_1_NOMINEES: Nominee[] = [
   {
     id: 'c1-1',
     name: 'Raffa e Manu',
     category: 'Best Parents',
     work: 'I Pilastri della Famiglia',
-    imageUrl: 'public/img/EmaRaffa.jpg'
+    imageUrl: 'img/EmaRaffa.jpg'
   },
   {
     id: 'c1-2',
     name: 'Famiglia Rossi',
     category: 'Best Parents',
     work: 'Insieme nel Bosco',
-    imageUrl: 'public/img/genitoriBosco.jpg'
+    imageUrl: 'img/genitoriBosco.jpg'
   },
   {
     id: 'c1-3',
     name: 'Mamma e Papà',
     category: 'Best Parents',
     work: 'Home Alone Spirit',
-    imageUrl: 'public/img/MammaHoPersoAereo.jpg'
+    imageUrl: 'img/MammaHoPersoAereo.jpg'
   },
   {
     id: 'c1-4',
@@ -71,7 +71,7 @@ export const CATEGORY_1_NOMINEES: Nominee[] = [
   }
 ];
 
-// Categoria 4 (Athlete of the Year), folder 'img'
+// Categoria 4 (Athlete of the Year) con path corretti
 const CATEGORY_4_NOMINEES: Nominee[] = [
   { ...NOMINEES[0], id: 'c4-1', name: 'Atleta 1', imageUrl: 'img/atleta_1.jpg' },
   { ...NOMINEES[1], id: 'c4-2', name: 'Atleta 2', imageUrl: 'img/atleta_2.jpg' },
