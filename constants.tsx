@@ -46,28 +46,28 @@ export const CATEGORY_1_NOMINEES: Nominee[] = [
     name: 'Raffa e Manu',
     category: 'Best Parents',
     work: 'I Pilastri della Famiglia',
-    imageUrl: 'public/img/EmaRaffa.jpg'
+    imageUrl: 'img/EmaRaffa.jpg'
   },
   {
     id: 'c1-2',
     name: 'Famiglia Rossi',
     category: 'Best Parents',
     work: 'Insieme nel Bosco',
-    imageUrl: 'public/img/genitoriBosco.jpg'
+    imageUrl: 'img/genitoriBosco.jpg'
   },
   {
     id: 'c1-3',
     name: 'Mamma e Papà',
     category: 'Best Parents',
     work: 'Home Alone Spirit',
-    imageUrl: 'public/img/MammaHoPersoAereo.jpg'
+    imageUrl: 'img/MammaHoPersoAereo.jpg'
   },
   {
     id: 'c1-4',
     name: 'Luca e Fede',
     category: 'Best Parents',
     work: 'Cuore e Coraggio',
-    imageUrl: 'public/img/LucaFede.jpg'
+    imageUrl: 'img/LucaFede.jpg'
   }
 ];
 
