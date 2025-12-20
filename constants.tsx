@@ -4,10 +4,10 @@ import { Nominee, AwardCategory } from './types';
 // Immagini per gli sfondi delle categorie nella pagina "Categorie"
 export const CATEGORY_IMAGES = [
   'img/MulinoBianco.jpg', // Best Parent
-  'https://images.unsplash.com/photo-1581333100576-b73bbe92c2cb?auto=format&fit=crop&q=80&w=1000', // Best Babysitter
+  'img/babysitter.jpg', // Best Babysitter
   'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000', // Revelation
   '/img/atleti.jpg', // Athlete
-  'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&q=80&w=1000', // Choreographer
+  'img/CoreografiaBG.jpg', // Choreographer
 ];
 
 export const NOMINEES: Nominee[] = [
@@ -22,18 +22,6 @@ export const NOMINEES: Nominee[] = [
     name: 'Giulia Bianchi',
     category: 'Miglior Attrice',
     imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRy2pWSfOtsKNebvS9Vn4Dpoi8W1p2umUbX6up7vvH2ME85y-DRvSJT_Y00fBp_kmOGEUdeMPZGFMbBrKwUOTnI2z6Q1OAi91-2eeCXYSwNpHqGQ0YJR4SNw0mVUOD2ogkz13Ny2vcf7KfaThLiK28Wn6iJB05TgWik3D2DNpyBLaDowrYqLDK1qlLDb1I8G9ZRmDJLu7-uSc89K_iRIRQnJtU8G_2hRVYWGtFKx4fYURrAyd6d2sWMV7R0k4IhPm44MPr_4T407w'
-  },
-  {
-    id: '3',
-    name: 'Luca Verdi',
-    category: 'Miglior Regia',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDw0qNrCYIO1HiqtZcnzQH4EN38VUGNmLppviLjrZf6K_2eBAJ3zmNfaqi-Ey4-zvqDfw9RoUO32s_jdVY0EhZQkJPfGZEcxmwhw9TVTGFHY5GgOXn6yqtf2R_x9n1LKaRTiSF0B4u76sMvupVcb6Fk_mK8GAhIdjmnv0HYE3hf-WLsjDUhmfZFvAkZkjM7LfJwZoHShjOODGiBYaFfMiCmd7HnIfI-49uwoThmrGcwWCrkflg6vOvgFdhi_DsZeJVYfThi6AWbXPU'
-  },
-  {
-    id: '4',
-    name: 'Anna Neri',
-    category: 'Miglior Fotografia',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCY8sF-M4ryzv4b_0W_2CV8FhPz3p239KAlbLkCDJtfbaVEfIsVAh3Lw-8W0zkzXw8YW5-i57kUXUd_GoBocNnvqX4rcYZJ_JsLAyjVkGvnMolKHVuCqVpfTp6NB1LAqcWAFqjG_jOMa0J1DoALMjp8ASYxAM0HfCufwtWPMGkbPf9aBNxnryu_EpI-3VqboYQhgchVE9lyVo6aiDDIG2XLn1VoOoqEDZnch98CE9mJ3O5KZx0LQox8VipQYRY1WAHeiAlD_hCWMbc'
   }
 ];
 
@@ -45,9 +33,9 @@ export const CATEGORY_1_NOMINEES: Nominee[] = [
 ];
 
 export const CATEGORY_2_NOMINEES: Nominee[] = [
-  { id: 'c2-1', name: 'Nonni e affini', category: 'Best Babysitter', imageUrl: 'img/Nonni.jpg' },
-  { id: 'c2-2', name: 'Mary Poppins', category: 'Best Babysitter', imageUrl: 'img/Mary_Poppins_screen_2.jpg' },
   { id: 'c2-3', name: 'Mrs Doubtfire', category: 'Best Babysitter', imageUrl: 'img/mrs.-doubtfire.jpg' },
+  { id: 'c2-2', name: 'Mary Poppins', category: 'Best Babysitter', imageUrl: 'img/Mary_Poppins_screen_2.jpg' },
+  { id: 'c2-1', name: 'Nonni e affini', category: 'Best Babysitter', imageUrl: 'img/Nonni.jpg' },
   { id: 'c2-4', name: 'Tata Matilda', category: 'Best Babysitter', imageUrl: 'img/tatamatilda.jpg' }
 ];
 
@@ -69,7 +57,7 @@ export const CATEGORIES: AwardCategory[] = [
   {
     id: 'babysitter',
     title: 'Best Babysitter',
-    description: 'Il riconoscimento per chi salva le serate con creatività, gioco e affidabilità assoluta.',
+    description: 'Il riconoscimento per chi salva le serate (altrui) con creatività, gioco e affidabilità assoluta.',
     icon: 'child_care',
     nominees: CATEGORY_2_NOMINEES
   },
@@ -89,10 +77,10 @@ export const CATEGORIES: AwardCategory[] = [
   },
   {
     id: 'choreographer',
-    title: 'Best Choreographer',
+    title: 'Best Coreografia',
     description: 'Per chi porta il ritmo in ogni occasione, trasformando il salotto in una pista da ballo.',
     icon: 'music_note',
-    nominees: NOMINEES
+    nominees: [] // Vuoto come richiesto
   }
 ];
 
@@ -125,8 +113,9 @@ export const Winners: Nominee[] = [
   },
   {
     id: 'w5',
-    name: 'Anna Neri',
-    category: 'Best Choreographer',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCY8sF-M4ryzv4b_0W_2CV8FhPz3p239KAlbLkCDJtfbaVEfIsVAh3Lw-8W0zkzXw8YW5-i57kUXUd_GoBocNnvqX4rcYZJ_JsLAyjVkGvnMolKHVuCqVpfTp6NB1LAqcWAFqjG_jOMa0J1DoALMjp8ASYxAM0HfCufwtWPMGkbPf9aBNxnryu_EpI-3VqboYQhgchVE9lyVo6aiDDIG2XLn1VoOoqEDZnch98CE9mJ3O5KZx0LQox8VipQYRY1WAHeiAlD_hCWMbc',
+    name: 'Mbrellino',
+    category: 'Best Coreografia',
+    imageUrl: 'img/Mbrellino.jpg',
+    work: 'Il Ritmo nel Sangue'
   }
 ];

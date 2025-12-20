@@ -1,7 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Screen, Nominee } from '../types';
-import { gemini } from '../geminiService';
 
 interface WinnerProps {
   winner: Nominee;
@@ -11,76 +10,69 @@ interface WinnerProps {
 
 const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isLocalVideo, setIsLocalVideo] = useState(false);
   const [loadingAudio, setLoadingAudio] = useState(false);
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const [audioError, setAudioError] = useState<string | null>(null);
+  const localAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const isBestParent = category === 'Best Parent';
   const isBestBabysitter = category === 'Best Babysitter';
+  const isAthlete = category === 'Athlete of the Year';
+  const isChoreographer = category === 'Best Coreografia';
 
-  const decode = (base64: string) => {
-    const binaryString = atob(base64);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes;
-  };
-
-  const decodeAudioData = async (
-    data: Uint8Array,
-    ctx: AudioContext,
-    sampleRate: number = 24000,
-    numChannels: number = 1
-  ): Promise<AudioBuffer> => {
-    const dataInt16 = new Int16Array(data.buffer);
-    const frameCount = dataInt16.length / numChannels;
-    const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
-
-    for (let channel = 0; channel < numChannels; channel++) {
-      const channelData = buffer.getChannelData(channel);
-      for (let i = 0; i < frameCount; i++) {
-        channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
-      }
-    }
-    return buffer;
-  };
-
-  const playAudioFromBase64 = async (base64: string) => {
+  const playLocalFile = async (fileName: string) => {
+    setLoadingAudio(true);
+    setAudioError(null);
+    
     try {
-      if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-      }
-      const ctx = audioContextRef.current;
-      if (ctx.state === 'suspended') {
-        await ctx.resume();
+      if (localAudioRef.current) {
+        localAudioRef.current.pause();
+        localAudioRef.current = null;
       }
 
-      const audioData = decode(base64);
-      const audioBuffer = await decodeAudioData(audioData, ctx);
-      const source = ctx.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(ctx.destination);
-      source.start();
-    } catch (err) {
-      console.error("Audio playback error:", err);
+      const audio = new Audio();
+      audio.src = `img/${fileName}?t=${Date.now()}`;
+      audio.preload = "auto";
+      localAudioRef.current = audio;
+
+      await new Promise((resolve, reject) => {
+        const onCanPlay = () => {
+          cleanup();
+          resolve(true);
+        };
+        const onError = () => {
+          cleanup();
+          reject(new Error(`Impossibile caricare il file ${fileName}. Verifica che il file esista nella cartella 'img/'.`));
+        };
+        const cleanup = () => {
+          audio.removeEventListener('canplaythrough', onCanPlay);
+          audio.removeEventListener('error', onError);
+        };
+        audio.addEventListener('canplaythrough', onCanPlay);
+        audio.addEventListener('error', onError);
+        audio.load();
+      });
+
+      await audio.play();
+      setLoadingAudio(false);
+    } catch (err: any) {
+      console.error("Riproduzione locale fallita:", err.message);
+      setAudioError(err.message);
+      setLoadingAudio(false);
     }
   };
 
   const handleAction = async () => {
     if (isBestBabysitter) {
-      // Embed video richiesto: 3lM1dfW8a44
+      setIsLocalVideo(false);
       setActiveVideo("https://www.youtube.com/embed/3lM1dfW8a44?autoplay=1");
     } else if (isBestParent) {
-      // Audio Alexa
-      setLoadingAudio(true);
-      try {
-        const prompt = `Dì con voce neutra, chiara e robotica stile assistente vocale: Congratulazioni a Emanuele e Raffaella. Avete vinto il premio Best Parent per la vostra dedizione e il vostro amore incondizionato. Grazie per essere un esempio per tutti noi.`;
-        const audioData = await gemini.textToSpeech(prompt, 'Kore');
-        if (audioData) await playAudioFromBase64(audioData);
-      } finally {
-        setLoadingAudio(false);
-      }
+      await playLocalFile('Alexa.m4a');
+    } else if (isAthlete) {
+      await playLocalFile('AudioVittoria.m4a');
+    } else if (isChoreographer) {
+      setIsLocalVideo(true);
+      setActiveVideo("img/Coreografia.mp4");
     } else {
       onNavigate('speech', winner);
     }
@@ -88,8 +80,10 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
 
   useEffect(() => {
     return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
+      if (localAudioRef.current) {
+        localAudioRef.current.pause();
+        localAudioRef.current.src = "";
+        localAudioRef.current = null;
       }
     };
   }, []);
@@ -134,7 +128,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
                 )}
               </div>
               
-              <div className="pt-4 flex flex-wrap gap-4">
+              <div className="pt-4 flex flex-col gap-4">
                 <button 
                   onClick={handleAction}
                   disabled={loadingAudio}
@@ -142,17 +136,22 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
                 >
                   <div className="flex items-center gap-2">
                     {loadingAudio ? (
-                       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                     ) : (
                       <span className="material-symbols-outlined group-hover/btn:animate-bounce">
-                        {isBestBabysitter ? 'play_circle' : isBestParent ? 'spatial_audio' : 'auto_fix_high'}
+                        {isBestBabysitter || isChoreographer ? 'play_circle' : (isBestParent || isAthlete) ? 'spatial_audio' : 'auto_fix_high'}
                       </span>
                     )}
                     <span className="truncate uppercase">
-                      {isBestBabysitter ? 'Guarda Video' : isBestParent ? 'Ascolta Ringraziamenti' : 'Discorso AI'}
+                      {loadingAudio ? 'Caricamento...' : isBestBabysitter ? 'Guarda Video' : isBestParent ? 'Ascolta i ringraziamenti' : isAthlete ? 'Ascolta i momenti salienti' : isChoreographer ? 'Guarda Coreografia' : 'Discorso AI'}
                     </span>
                   </div>
                 </button>
+                {audioError && (
+                  <p className="text-primary text-xs font-medium bg-primary/10 p-2 rounded border border-primary/20 animate-pulse text-center">
+                    {audioError}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -174,20 +173,32 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
       {activeVideo && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-8">
           <button 
-            onClick={() => setActiveVideo(null)}
+            onClick={() => {
+              setActiveVideo(null);
+              setIsLocalVideo(false);
+            }}
             className="absolute top-6 right-6 text-white/70 hover:text-white z-10 transition-colors"
           >
             <span className="material-symbols-outlined text-5xl">close</span>
           </button>
           <div className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_50px_rgba(236,19,19,0.3)] bg-black">
-            <iframe 
-              className="w-full h-full"
-              src={activeVideo} 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowFullScreen
-            ></iframe>
+            {isLocalVideo ? (
+              <video 
+                className="w-full h-full object-contain" 
+                controls 
+                autoPlay 
+                src={activeVideo}
+              ></video>
+            ) : (
+              <iframe 
+                className="w-full h-full"
+                src={activeVideo} 
+                title="YouTube video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen
+              ></iframe>
+            )}
           </div>
         </div>
       )}
