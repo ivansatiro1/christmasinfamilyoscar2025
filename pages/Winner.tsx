@@ -19,6 +19,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
   const isBestBabysitter = category === 'Best Babysitter';
   const isAthlete = category === 'Athlete of the Year';
   const isChoreographer = category === 'Best Coreografia';
+  const isChristmas = category === 'Miglior Albero di Natale';
 
   const playLocalFile = async (fileName: string) => {
     setLoadingAudio(true);
@@ -72,7 +73,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
       await playLocalFile('AudioVittoria.m4a');
     } else if (isChoreographer) {
       setIsLocalVideo(true);
-      setActiveVideo("img/Coreografia.mp4");
+      setActiveVideo("img/Coreo.mp4");
     } else {
       onNavigate('speech', winner);
     }
@@ -187,6 +188,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
                 className="w-full h-full object-contain" 
                 controls 
                 autoPlay 
+                playsInline
                 src={activeVideo}
               ></video>
             ) : (

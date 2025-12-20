@@ -112,7 +112,7 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
     setLoadingAudio(nominee.id);
     try {
       if (nominee.id === 'c1-1') {
-        const audioData = await gemini.textToSpeech("Volevamo far crescere i nostri figli con Tonio Cartonio e Lupo lucio", 'Kore');
+        const audioData = await gemini.textToSpeech("Volevamo solo far crescere i nostri figli con Tonio Cartonio e Lupo lucio", 'Kore');
         if (audioData) await playAudioFromBase64(audioData);
       } else if (nominee.id === 'c1-2') {
         const prompt = "Dì con la voce squillante ed energica di Ezio Greggio: Lo mollo o non lo mollo, ma ceeeeeeeeeerto che lo mollo!";
@@ -136,6 +136,10 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
       } else if (nominee.id === 'c2-4') {
         setIsLocalVideo(false);
         setActiveVideo("https://www.youtube.com/embed/RGbnp-LMJRE?start=10&autoplay=1");
+      } else if (category.id === 'christmas') {
+        const prompt = `Dì con entusiasmo: Ecco lo splendido albero di Natale di ${nominee.name}! Che magia!`;
+        const audioData = await gemini.textToSpeech(prompt, 'Zephyr');
+        if (audioData) await playAudioFromBase64(audioData);
       }
     } catch (err) {
       console.error("Interaction error:", err);
@@ -151,7 +155,6 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
     } else if (category.nominees.length > 0) {
       onNavigate('winner', category.nominees[0]);
     } else {
-      // Fallback per categorie senza candidati (es. Coreografia)
       onNavigate('winner', Winners.find(w => w.category === category.title) || Winners[0]);
     }
   };
@@ -290,6 +293,7 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
                 className="w-full h-full object-contain" 
                 controls 
                 autoPlay 
+                playsInline
                 src={activeVideo}
               ></video>
             ) : (

@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Screen, Nominee, AwardCategory } from './types';
-import { NOMINEES, CATEGORIES } from './constants';
+// Fix: Import 'Winners' from constants and alias it as 'NOMINEES' to resolve the missing export error
+import { Winners as NOMINEES, CATEGORIES } from './constants';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';

@@ -5,24 +5,16 @@ import { Nominee, AwardCategory } from './types';
 export const CATEGORY_IMAGES = [
   'img/MulinoBianco.jpg', // Best Parent
   'img/babysitter.jpg', // Best Babysitter
-  'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000', // Revelation
+  'https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&q=80&w=1000', // Miglior Albero di Natale
   '/img/atleti.jpg', // Athlete
-  'img/CoreografiaBG.jpg', // Choreographer
+  'img/bolle.jpg', // Choreographer
 ];
 
-export const NOMINEES: Nominee[] = [
-  {
-    id: '1',
-    name: 'Marco Rossi',
-    category: 'Miglior Attore',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBFyiqhM7knswRHr_EulttR3nm8_GrM2oBDmjSFQ6M08gZtWtmY958tVsM-QOHUCizzNYhpRjlVCyCGjI9kqczIbT0-0JJcDALF0vG1qC3Sezkx4tAhxX_Ocxyon2rMQLzabrMz5x5Zty0XS60oSf-V6zZ8Q5M8GgUjmrwSuHABgGB70Os07Y3c_943sDnujCsHewODPZhYleoBx3DYS7t2bbVqxj3fb0CxjEZc_HwG2PiBcdwcrjYkrxhv8osC4evZKR_j_CGrPfI'
-  },
-  {
-    id: '2',
-    name: 'Giulia Bianchi',
-    category: 'Miglior Attrice',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDRy2pWSfOtsKNebvS9Vn4Dpoi8W1p2umUbX6up7vvH2ME85y-DRvSJT_Y00fBp_kmOGEUdeMPZGFMbBrKwUOTnI2z6Q1OAi91-2eeCXYSwNpHqGQ0YJR4SNw0mVUOD2ogkz13Ny2vcf7KfaThLiK28Wn6iJB05TgWik3D2DNpyBLaDowrYqLDK1qlLDb1I8G9ZRmDJLu7-uSc89K_iRIRQnJtU8G_2hRVYWGtFKx4fYURrAyd6d2sWMV7R0k4IhPm44MPr_4T407w'
-  }
+export const CATEGORY_CHRISTMAS_NOMINEES: Nominee[] = [
+  { id: 'c3-1', name: 'Antonietta', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoAntonietta.jpg' },
+  { id: 'c3-2', name: 'Federica', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoFederica.jpg' },
+  { id: 'c3-3', name: 'Marialuisa', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoMarialuisa.jpg' },
+  { id: 'c3-4', name: 'Ivano', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoIvano.jpg' }
 ];
 
 export const CATEGORY_1_NOMINEES: Nominee[] = [
@@ -62,11 +54,11 @@ export const CATEGORIES: AwardCategory[] = [
     nominees: CATEGORY_2_NOMINEES
   },
   {
-    id: 'revelation',
-    title: 'Revelation of the Year',
-    description: 'Per chi ha sorpreso tutti con talenti nascosti e progressi incredibili.',
-    icon: 'auto_awesome',
-    nominees: NOMINEES
+    id: 'christmas',
+    title: 'Miglior Albero di Natale',
+    description: 'Per l\'albero più luminoso, creativo e magico delle festività.',
+    icon: 'park',
+    nominees: CATEGORY_CHRISTMAS_NOMINEES
   },
   {
     id: 'athlete',
@@ -80,7 +72,7 @@ export const CATEGORIES: AwardCategory[] = [
     title: 'Best Coreografia',
     description: 'Per chi porta il ritmo in ogni occasione, trasformando il salotto in una pista da ballo.',
     icon: 'music_note',
-    nominees: [] // Vuoto come richiesto
+    nominees: []
   }
 ];
 
@@ -99,10 +91,10 @@ export const Winners: Nominee[] = [
   },
   {
     id: 'w3',
-    name: 'Luca Verdi',
-    category: 'Revelation of the Year',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDw0qNrCYIO1HiqtZcnzQH4EN38VUGNmLppviLjrZf6K_2eBAJ3zmNfaqi-Ey4-zvqDfw9RoUO32s_jdVY0EhZQkJPfGZEcxmwhw9TVTGFHY5GgOXn6yqtf2R_x9n1LKaRTiSF0B4u76sMvupVcb6Fk_mK8GAhIdjmnv0HYE3hf-WLsjDUhmfZFvAkZkjM7LfJwZoHShjOODGiBYaFfMiCmd7HnIfI-49uwoThmrGcwWCrkflg6vOvgFdhi_DsZeJVYfThi6AWbXPU',
-    work: 'Oltre il Confine'
+    name: 'Antonietta',
+    category: 'Miglior Albero di Natale',
+    imageUrl: 'img/alberoAntonietta.jpg',
+    work: 'Luci d\'Inverno'
   },
   {
     id: 'w4',
