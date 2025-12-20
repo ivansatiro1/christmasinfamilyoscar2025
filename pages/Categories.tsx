@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Screen, AwardCategory } from '../types';
+import { CATEGORY_IMAGES } from '../constants';
 
 interface CategoriesProps {
   onNavigate: (screen: Screen, data: AwardCategory) => void;
@@ -11,8 +12,8 @@ const Categories: React.FC<CategoriesProps> = ({ onNavigate, categories }) => {
   return (
     <div className="animate-fade-in-up flex flex-col items-center py-12 px-4 md:px-10">
       <div className="w-full max-w-[1000px] flex flex-col gap-8">
-        <div className="relative overflow-hidden rounded-xl bg-cover bg-center h-80 flex flex-col items-center justify-center p-8 text-center" style={{ backgroundImage: 'linear-gradient(rgba(34, 16, 16, 0.4), rgba(34, 16, 16, 0.9)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoJCDANVyAV7I6bXreqlCx0gbMGQCDZRw8kEZfuSB89RusHqLeDwexdUMkTk4MiBmAcq8TelsEQXTIfWjpeK7YcDfIbYKL4P05LObgvhKx2AmA1acDy3OMeNZdt60BB-dFN325rq_d39xIjx5hjG-3JMBza55x8FYFfRJPjLtz5GkhSEspdbetZRdFKe9ErTafGyowbDQD4ggYlYruUlgu_FZ8jLMHAiHXvMk8Z9tzYS18DuR_IwgnzkXSt2-QqJdO5NXYBA9rjvo")' }}>
-          <span className="material-symbols-outlined text-yellow-500 text-4xl mb-4">emoji_events</span>
+        <div className="relative overflow-hidden rounded-xl bg-cover bg-center h-80 flex flex-col items-center justify-center p-8 text-center" style={{ backgroundImage: 'linear-gradient(rgba(34, 16, 16, 0.4), rgba(34, 16, 16, 0.9)), url("https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&q=80&w=1200")' }}>
+          <span className="material-symbols-outlined text-gold text-4xl mb-4">emoji_events</span>
           <h1 className="text-white text-5xl font-black uppercase tracking-tight md:text-6xl drop-shadow-lg">
             Le Nomination 2025
           </h1>
@@ -24,7 +25,7 @@ const Categories: React.FC<CategoriesProps> = ({ onNavigate, categories }) => {
         </div>
 
         <div className="flex flex-col gap-8">
-          {categories.map((cat) => (
+          {categories.map((cat, index) => (
             <div 
               key={cat.id}
               onClick={() => onNavigate('nominees', cat)}
@@ -33,7 +34,7 @@ const Categories: React.FC<CategoriesProps> = ({ onNavigate, categories }) => {
               <div className="w-full md:w-2/5 h-64 md:h-auto relative overflow-hidden">
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
-                  style={{ backgroundImage: `url("${cat.nominees[0].imageUrl}")` }}
+                  style={{ backgroundImage: `url("${CATEGORY_IMAGES[index] || cat.nominees[0].imageUrl}")` }}
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2a1515] md:bg-gradient-to-r md:from-transparent md:to-[#2a1515] opacity-90 md:opacity-100"></div>
               </div>
