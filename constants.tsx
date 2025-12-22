@@ -5,16 +5,16 @@ import { Nominee, AwardCategory } from './types';
 export const CATEGORY_IMAGES = [
   'img/MulinoBianco.jpg', // Best Parent
   'img/babysitter.jpg', // Best Babysitter
-  'https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&q=80&w=1000', // Miglior Albero di Natale
+  'https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&q=80&w=1000', // Best Christmas Tree
   '/img/atleti.jpg', // Athlete
   'img/bolle.jpg', // Choreographer
 ];
 
 export const CATEGORY_CHRISTMAS_NOMINEES: Nominee[] = [
-  { id: 'c3-1', name: 'Antonietta', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoAntonietta.jpg' },
-  { id: 'c3-2', name: 'Federica', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoFederica.jpg' },
-  { id: 'c3-3', name: 'Marialuisa', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoMarialuisa.jpg' },
-  { id: 'c3-4', name: 'Ivano', category: 'Miglior Albero di Natale', imageUrl: 'img/alberoIvano.jpg' }
+  { id: 'c3-1', name: 'Antonietta', category: 'Best Christmas Tree', imageUrl: 'img/alberoAntonietta.jpg' },
+  { id: 'c3-2', name: 'Federica', category: 'Best Christmas Tree', imageUrl: 'img/AlberoFede.jpg' },
+  { id: 'c3-3', name: 'Marialuisa', category: 'Best Christmas Tree', imageUrl: 'img/alberoMarialuisa.jpg' },
+  { id: 'c3-4', name: 'Valeria', category: 'Best Christmas Tree', imageUrl: 'img/alberoIvano.jpg' }
 ];
 
 export const CATEGORY_1_NOMINEES: Nominee[] = [
@@ -55,7 +55,7 @@ export const CATEGORIES: AwardCategory[] = [
   },
   {
     id: 'christmas',
-    title: 'Miglior Albero di Natale',
+    title: 'Best Christmas Tree',
     description: 'Per l\'albero più luminoso, creativo e magico delle festività.',
     icon: 'park',
     nominees: CATEGORY_CHRISTMAS_NOMINEES
@@ -69,7 +69,7 @@ export const CATEGORIES: AwardCategory[] = [
   },
   {
     id: 'choreographer',
-    title: 'Best Coreografia',
+    title: 'Best Choreography',
     description: 'Per chi porta il ritmo in ogni occasione, trasformando il salotto in una pista da ballo.',
     icon: 'music_note',
     nominees: []
@@ -91,10 +91,9 @@ export const Winners: Nominee[] = [
   },
   {
     id: 'w3',
-    name: 'Antonietta',
-    category: 'Miglior Albero di Natale',
-    imageUrl: 'img/alberoAntonietta.jpg',
-    work: 'Luci d\'Inverno'
+    name: 'Ivanoooooooo',
+    category: 'Best Christmas Tree',
+    imageUrl: 'img/alberoValeria.jpg'
   },
   {
     id: 'w4',
@@ -106,7 +105,7 @@ export const Winners: Nominee[] = [
   {
     id: 'w5',
     name: 'Mbrellino',
-    category: 'Best Coreografia',
+    category: 'Best Choreography',
     imageUrl: 'img/Mbrellino.jpg',
     work: 'Il Ritmo nel Sangue'
   }

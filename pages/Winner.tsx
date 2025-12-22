@@ -18,8 +18,8 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
   const isBestParent = category === 'Best Parent';
   const isBestBabysitter = category === 'Best Babysitter';
   const isAthlete = category === 'Athlete of the Year';
-  const isChoreographer = category === 'Best Coreografia';
-  const isChristmas = category === 'Miglior Albero di Natale';
+  const isChoreographer = category === 'Best Choreography';
+  const isChristmas = category === 'Best Christmas Tree';
 
   const playLocalFile = async (fileName: string) => {
     setLoadingAudio(true);

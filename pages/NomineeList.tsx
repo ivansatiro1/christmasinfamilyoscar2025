@@ -15,6 +15,8 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [isLocalVideo, setIsLocalVideo] = useState(false);
   const [loadingAudio, setLoadingAudio] = useState<string | null>(null);
+  const [pendingWinnerNavigation, setPendingWinnerNavigation] = useState(false);
+  
   const audioContextRef = useRef<AudioContext | null>(null);
   const localAudioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -149,13 +151,33 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   };
 
   const handleDiscoverWinner = () => {
+    // Prima di navigare, mostriamo il video di suspense richiesto
+    setIsLocalVideo(false);
+    setActiveVideo("https://www.youtube.com/embed/ua-5RI4dJOU?start=5&autoplay=1&controls=0&rel=0");
+    setPendingWinnerNavigation(true);
+  };
+
+  const executeWinnerNavigation = () => {
     const categoryIndex = CATEGORIES.findIndex(c => c.id === category.id);
+    let targetWinner: Nominee;
+    
     if (categoryIndex !== -1 && Winners[categoryIndex]) {
-      onNavigate('winner', Winners[categoryIndex]);
+      targetWinner = Winners[categoryIndex];
     } else if (category.nominees.length > 0) {
-      onNavigate('winner', category.nominees[0]);
+      targetWinner = category.nominees[0];
     } else {
-      onNavigate('winner', Winners.find(w => w.category === category.title) || Winners[0]);
+      targetWinner = Winners.find(w => w.category === category.title) || Winners[0];
+    }
+    
+    onNavigate('winner', targetWinner);
+  };
+
+  const closeVideo = () => {
+    setActiveVideo(null);
+    setIsLocalVideo(false);
+    if (pendingWinnerNavigation) {
+      setPendingWinnerNavigation(false);
+      executeWinnerNavigation();
     }
   };
 
@@ -277,16 +299,22 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
       </div>
       
       {activeVideo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-8">
-          <button 
-            onClick={() => {
-              setActiveVideo(null);
-              setIsLocalVideo(false);
-            }}
-            className="absolute top-6 right-6 text-white/70 hover:text-white z-10 transition-colors"
-          >
-            <span className="material-symbols-outlined text-5xl">close</span>
-          </button>
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-4 md:p-8">
+          <div className="w-full max-w-5xl flex justify-between items-center mb-4">
+             <h3 className="text-white text-lg font-bold uppercase tracking-widest">
+                {pendingWinnerNavigation ? "And the Oscar goes to..." : "Visualizzazione Video"}
+             </h3>
+             <button 
+              onClick={closeVideo}
+              className="text-white/70 hover:text-white transition-all flex items-center gap-2 group"
+            >
+              <span className="text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                {pendingWinnerNavigation ? "Proclama Vincitore" : "Chiudi"}
+              </span>
+              <span className="material-symbols-outlined text-4xl">close</span>
+            </button>
+          </div>
+          
           <div className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_50px_rgba(236,19,19,0.3)] bg-black">
             {isLocalVideo ? (
               <video 
@@ -307,6 +335,17 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
               ></iframe>
             )}
           </div>
+          
+          {pendingWinnerNavigation && (
+            <div className="mt-8">
+              <button 
+                onClick={closeVideo}
+                className="px-10 py-4 bg-primary text-white font-black uppercase tracking-widest rounded-full hover:bg-red-600 transition-all shadow-xl animate-pulse"
+              >
+                Scopri il Nome!
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
