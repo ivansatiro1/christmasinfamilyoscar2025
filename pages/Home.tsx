@@ -9,7 +9,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const calculateTimeLeft = () => {
-    const target = new Date('2025-12-25T22:00:00');
+    const target = new Date('2025-12-24T22:00:00');
     const now = new Date();
     const difference = target.getTime() - now.getTime();
     

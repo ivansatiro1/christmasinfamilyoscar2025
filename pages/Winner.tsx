@@ -15,7 +15,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
   const [audioError, setAudioError] = useState<string | null>(null);
   const localAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const isBestParent = category === 'Best Parent';
+  const isBestParent = category === 'Best Parents';
   const isBestBabysitter = category === 'Best Babysitter';
   const isAthlete = category === 'Athlete of the Year';
   const isChoreographer = category === 'Best Choreography';
@@ -74,7 +74,11 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
     } else if (isChoreographer) {
       setIsLocalVideo(true);
       setActiveVideo("img/Coreo.mp4");
-    } else {
+    } else if (isChristmas) {
+      setIsLocalVideo(true);
+      setActiveVideo("img/AlberoWinner.mp4");
+    }
+    else {
       onNavigate('speech', winner);
     }
   };
@@ -140,7 +144,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
                       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                     ) : (
                       <span className="material-symbols-outlined group-hover/btn:animate-bounce">
-                        {isBestBabysitter || isChoreographer ? 'play_circle' : (isBestParent || isAthlete) ? 'spatial_audio' : 'auto_fix_high'}
+                        {isBestBabysitter || isChoreographer || isChristmas? 'play_circle' : (isBestParent || isAthlete) ? 'spatial_audio' : 'auto_fix_high'}
                       </span>
                     )}
                     <span className="truncate uppercase">

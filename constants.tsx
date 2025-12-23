@@ -11,10 +11,10 @@ export const CATEGORY_IMAGES = [
 ];
 
 export const CATEGORY_CHRISTMAS_NOMINEES: Nominee[] = [
-  { id: 'c3-1', name: 'Antonietta', category: 'Best Christmas Tree', imageUrl: 'img/alberoAntonietta.jpg' },
+  { id: 'c3-1', name: 'Antonietta', category: 'Best Christmas Tree', imageUrl: 'img/Antonietta.jpg' },
   { id: 'c3-2', name: 'Federica', category: 'Best Christmas Tree', imageUrl: 'img/AlberoFede.jpg' },
-  { id: 'c3-3', name: 'Marialuisa', category: 'Best Christmas Tree', imageUrl: 'img/alberoMarialuisa.jpg' },
-  { id: 'c3-4', name: 'Valeria', category: 'Best Christmas Tree', imageUrl: 'img/alberoIvano.jpg' }
+  { id: 'c3-3', name: 'Marialuisa', category: 'Best Christmas Tree', imageUrl: 'img/MaryAlbero.jpg' },
+  { id: 'c3-4', name: 'Valeria', category: 'Best Christmas Tree', imageUrl: 'img/ValeriaAlbero.jpg' }
 ];
 
 export const CATEGORY_1_NOMINEES: Nominee[] = [
@@ -80,7 +80,7 @@ export const Winners: Nominee[] = [
   {
     id: 'w1',
     name: 'Emanuele e Raffaella',
-    category: 'Best Parent',
+    category: 'Best Parents',
     imageUrl: 'img/EmaRaffaWinner.jpg',
   },
   {
@@ -93,13 +93,13 @@ export const Winners: Nominee[] = [
     id: 'w3',
     name: 'Ivanoooooooo',
     category: 'Best Christmas Tree',
-    imageUrl: 'img/alberoValeria.jpg'
+    imageUrl: 'img/ValeriaAlbero.jpg'
   },
   {
     id: 'w4',
     name: 'Federica Annunziata',
     category: 'Athlete of the Year',
-    imageUrl: 'img/FedeWinner.png',
+    imageUrl: 'img/FedeWinner.jpg',
     work: 'Grinta e Determinazione'
   },
   {

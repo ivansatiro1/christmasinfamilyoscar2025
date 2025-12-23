@@ -114,19 +114,14 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
     setLoadingAudio(nominee.id);
     try {
       if (nominee.id === 'c1-1') {
-        const audioData = await gemini.textToSpeech("Volevamo solo far crescere i nostri figli con Tonio Cartonio e Lupo lucio", 'Kore');
-        if (audioData) await playAudioFromBase64(audioData);
+        playLocalFile('Genitori.m4a');
       } else if (nominee.id === 'c1-2') {
-        const prompt = "Dì con la voce squillante ed energica di Ezio Greggio: Lo mollo o non lo mollo, ma ceeeeeeeeeerto che lo mollo!";
-        const audioData = await gemini.textToSpeech(prompt, 'Puck');
-        if (audioData) await playAudioFromBase64(audioData);
+        playLocalFile('EmaRaffa.m4a');
       } else if (nominee.id === 'c1-3') {
         setIsLocalVideo(false);
         setActiveVideo("https://www.youtube.com/embed/IIXN684w4rU?start=50&autoplay=1");
       } else if (nominee.id === 'c1-4') {
-        const prompt1= "Dì con la voce agitata: Luca, è passata la finestra del sonno!!!!Vittoria, sveglia, vittoria sveglia, non dormire, giochiamo un pò!!!";
-        const audioData = await gemini.textToSpeech(prompt1, 'Kore');
-        if (audioData) await playAudioFromBase64(audioData);
+        playLocalFile('Fede.m4a');
       } else if (nominee.id === 'c4-4') {
         playLocalFile('AudioVittoria.m4a');
       } else if (nominee.id === 'c2-2') {
