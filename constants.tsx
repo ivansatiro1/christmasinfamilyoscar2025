@@ -18,10 +18,10 @@ export const CATEGORY_CHRISTMAS_NOMINEES: Nominee[] = [
 ];
 
 export const CATEGORY_1_NOMINEES: Nominee[] = [
-  { id: 'c1-1', name: 'La famiglia del Bosco', category: 'Best Parents', imageUrl: 'img/genitoriBosco.jpg' },
-  { id: 'c1-2', name: 'Raffaella ed Emanuele', category: 'Best Parents', imageUrl: 'img/EmaRaffa.jpg' },
-  { id: 'c1-3', name: 'I genitori di Mamma ho perso l\'aereo', category: 'Best Parents', imageUrl: 'img/MammaHoPersoAereo.jpg' },
-  { id: 'c1-4', name: 'Luca e Federica', category: 'Best Parents', imageUrl: 'img/LucaFede.jpg' }
+  { id: 'c1-1', name: 'La famiglia del Bosco', category: 'Best Parent', imageUrl: 'img/genitoriBosco.jpg' },
+  { id: 'c1-2', name: 'Raffaella ed Emanuele', category: 'Best Parent', imageUrl: 'img/EmaRaffa.jpg' },
+  { id: 'c1-3', name: 'I genitori di Mamma ho perso l\'aereo', category: 'Best Parent', imageUrl: 'img/MammaHoPersoAereo.jpg' },
+  { id: 'c1-4', name: 'Luca e Federica', category: 'Best Parent', imageUrl: 'img/LucaFede.jpg' }
 ];
 
 export const CATEGORY_2_NOMINEES: Nominee[] = [
@@ -80,7 +80,7 @@ export const Winners: Nominee[] = [
   {
     id: 'w1',
     name: 'Emanuele e Raffaella',
-    category: 'Best Parents',
+    category: 'Best Parent',
     imageUrl: 'img/EmaRaffaWinner.jpg',
   },
   {

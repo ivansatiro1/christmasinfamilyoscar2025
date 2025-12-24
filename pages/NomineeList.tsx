@@ -16,11 +16,14 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   const [isLocalVideo, setIsLocalVideo] = useState(false);
   const [loadingAudio, setLoadingAudio] = useState<string | null>(null);
   const [pendingWinnerNavigation, setPendingWinnerNavigation] = useState(false);
+  const [showJuryImage, setShowJuryImage] = useState(false);
+  const [juryDiscovered, setJuryDiscovered] = useState(false);
   
   const audioContextRef = useRef<AudioContext | null>(null);
   const localAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const isChoreographer = category.id === 'choreographer';
+  const isChristmas = category.id === 'christmas';
 
   const decode = (base64: string) => {
     const binaryString = atob(base64);
@@ -84,6 +87,7 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   useEffect(() => {
     setRevealedCount(0);
     setAllRevealed(false);
+    setJuryDiscovered(false);
     return () => {
       if (audioContextRef.current) {
         audioContextRef.current.close();
@@ -106,8 +110,13 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   };
 
   const handleDiscoverJury = () => {
-    setIsLocalVideo(true);
-    setActiveVideo("img/ilmondodelladanzasa.mp4");
+    if (isChristmas) {
+      setShowJuryImage(true);
+      setJuryDiscovered(true);
+    } else {
+      setIsLocalVideo(true);
+      setActiveVideo("img/ilmondodelladanzasa.mp4");
+    }
   };
 
   const handleNomineeClick = async (nominee: Nominee) => {
@@ -122,8 +131,6 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
         setActiveVideo("https://www.youtube.com/embed/IIXN684w4rU?start=50&autoplay=1");
       } else if (nominee.id === 'c1-4') {
         playLocalFile('Fede.m4a');
-      } else if (nominee.id === 'c4-4') {
-        playLocalFile('AudioVittoria.m4a');
       } else if (nominee.id === 'c2-2') {
         setIsLocalVideo(false);
         setActiveVideo("https://www.youtube.com/embed/mrDOc7DaBJk?start=1&autoplay=1");
@@ -133,10 +140,6 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
       } else if (nominee.id === 'c2-4') {
         setIsLocalVideo(false);
         setActiveVideo("https://www.youtube.com/embed/RGbnp-LMJRE?start=10&autoplay=1");
-      } else if (category.id === 'christmas') {
-        const prompt = `Dì con entusiasmo: Ecco lo splendido albero di Natale di ${nominee.name}! Che magia!`;
-        const audioData = await gemini.textToSpeech(prompt, 'Zephyr');
-        if (audioData) await playAudioFromBase64(audioData);
       }
     } catch (err) {
       console.error("Interaction error:", err);
@@ -146,7 +149,6 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
   };
 
   const handleDiscoverWinner = () => {
-    // Prima di navigare, mostriamo il video di suspense richiesto
     setIsLocalVideo(false);
     setActiveVideo("https://www.youtube.com/embed/ua-5RI4dJOU?start=5&autoplay=1&controls=0&rel=0");
     setPendingWinnerNavigation(true);
@@ -282,17 +284,47 @@ const NomineeList: React.FC<NomineeListProps> = ({ category, onNavigate }) => {
               </button>
             </div>
           ) : (
-            <button 
-              onClick={handleDiscoverWinner}
-              className="group relative flex items-center justify-center h-24 px-16 bg-primary hover:bg-red-600 rounded-full transition-all text-white font-black uppercase tracking-[0.2em] shadow-[0_0_50px_rgba(236,19,19,0.5)] hover:scale-105 active:scale-95"
-            >
-              <span className="material-symbols-outlined mr-3 text-3xl">emoji_events</span>
-              Scopri il Vincitore
-            </button>
+            <div className="flex flex-col items-center gap-6">
+              {isChristmas && !juryDiscovered && (
+                <button 
+                  onClick={handleDiscoverJury}
+                  className="group relative flex items-center justify-center h-20 px-12 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all text-white font-bold uppercase tracking-widest overflow-hidden mb-4"
+                >
+                  <span className="relative z-10 flex items-center gap-3">
+                    <span className="material-symbols-outlined text-gold group-hover:rotate-12 transition-transform">groups</span>
+                    Scopri la Giuria
+                  </span>
+                </button>
+              )}
+              
+              {(juryDiscovered || !isChristmas) && (
+                <button 
+                  onClick={handleDiscoverWinner}
+                  className="group relative flex items-center justify-center h-24 px-16 bg-primary hover:bg-red-600 rounded-full transition-all text-white font-black uppercase tracking-[0.2em] shadow-[0_0_50px_rgba(236,19,19,0.5)] hover:scale-105 active:scale-95"
+                >
+                  <span className="material-symbols-outlined mr-3 text-3xl">emoji_events</span>
+                  Scopri il Vincitore
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>
       
+      {showJuryImage && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/95 p-4 md:p-8">
+          <button 
+            onClick={() => setShowJuryImage(false)}
+            className="absolute top-6 right-6 text-white/70 hover:text-white z-10 transition-colors"
+          >
+            <span className="material-symbols-outlined text-5xl">close</span>
+          </button>
+          <div className="relative w-full max-w-4xl aspect-[4/3] rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_50px_rgba(236,19,19,0.3)] bg-black">
+            <img src="img/giuria.jpg" className="w-full h-full object-contain" alt="La Giuria" />
+          </div>
+        </div>
+      )}
+
       {activeVideo && (
         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-4 md:p-8">
           <div className="w-full max-w-5xl flex justify-between items-center mb-4">

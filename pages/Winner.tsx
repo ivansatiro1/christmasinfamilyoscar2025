@@ -15,7 +15,7 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
   const [audioError, setAudioError] = useState<string | null>(null);
   const localAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const isBestParent = category === 'Best Parents';
+  const isBestParent = category === 'Best Parent';
   const isBestBabysitter = category === 'Best Babysitter';
   const isAthlete = category === 'Athlete of the Year';
   const isChoreographer = category === 'Best Choreography';
@@ -134,24 +134,36 @@ const Winner: React.FC<WinnerProps> = ({ winner, category, onNavigate }) => {
               </div>
               
               <div className="pt-4 flex flex-col gap-4">
-                <button 
-                  onClick={handleAction}
-                  disabled={loadingAudio}
-                  className="flex-1 min-w-[200px] cursor-pointer items-center justify-center rounded-lg h-14 px-6 bg-primary hover:bg-red-600 disabled:opacity-50 text-white text-base font-bold shadow-lg shadow-primary/25 transition-all transform active:scale-95 group/btn"
-                >
-                  <div className="flex items-center gap-2">
-                    {loadingAudio ? (
-                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                    ) : (
-                      <span className="material-symbols-outlined group-hover/btn:animate-bounce">
-                        {isBestBabysitter || isChoreographer || isChristmas? 'play_circle' : (isBestParent || isAthlete) ? 'spatial_audio' : 'auto_fix_high'}
+                {isChristmas ? (
+                  <button 
+                    onClick={handleAction}
+                    className="flex-1 min-w-[200px] cursor-pointer items-center justify-center rounded-lg h-14 px-6 bg-primary hover:bg-red-600 text-white text-base font-bold shadow-lg shadow-primary/25 transition-all transform active:scale-95 group/btn"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-outlined group-hover/btn:animate-bounce">play_circle</span>
+                      <span className="uppercase tracking-widest">Guarda Video Vincitore</span>
+                    </div>
+                  </button>
+                ) : (
+                  <button 
+                    onClick={handleAction}
+                    disabled={loadingAudio}
+                    className="flex-1 min-w-[200px] cursor-pointer items-center justify-center rounded-lg h-14 px-6 bg-primary hover:bg-red-600 disabled:opacity-50 text-white text-base font-bold shadow-lg shadow-primary/25 transition-all transform active:scale-95 group/btn"
+                  >
+                    <div className="flex items-center gap-2">
+                      {loadingAudio ? (
+                        <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                      ) : (
+                        <span className="material-symbols-outlined group-hover/btn:animate-bounce">
+                          {isBestBabysitter || isChoreographer ? 'play_circle' : (isBestParent || isAthlete) ? 'spatial_audio' : 'auto_fix_high'}
+                        </span>
+                      )}
+                      <span className="truncate uppercase">
+                        {loadingAudio ? 'Caricamento...' : isBestBabysitter ? 'Guarda Video' : isBestParent ? 'Ascolta i ringraziamenti' : isAthlete ? 'Ascolta i momenti salienti' : isChoreographer ? 'Guarda Coreografia' : 'Senti discorso'}
                       </span>
-                    )}
-                    <span className="truncate uppercase">
-                      {loadingAudio ? 'Caricamento...' : isBestBabysitter ? 'Guarda Video' : isBestParent ? 'Ascolta i ringraziamenti' : isAthlete ? 'Ascolta i momenti salienti' : isChoreographer ? 'Guarda Coreografia' : 'Discorso AI'}
-                    </span>
-                  </div>
-                </button>
+                    </div>
+                  </button>
+                )}
                 {audioError && (
                   <p className="text-primary text-xs font-medium bg-primary/10 p-2 rounded border border-primary/20 animate-pulse text-center">
                     {audioError}
